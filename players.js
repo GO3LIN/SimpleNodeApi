@@ -6,6 +6,9 @@ const playersApi = {
   },
   getPlayer: (id) => {
     return players.find(p => p.id === id);
+  },
+  deletePlayer: (id) => {
+    return players.filter(p => p.id !== id);
   }
 }
 
