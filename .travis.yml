@@ -1,4 +1,8 @@
 deploy:
   provider: gae
+  keyfile: euplayers-8e3bd09e5b7f.json
   project: euplayers
   on: master
+before_install:
+- openssl aes-256-cbc -K $encrypted_572863528640_key -iv $encrypted_572863528640_iv
+  -in euplayers-8e3bd09e5b7f.json.enc -out euplayers-8e3bd09e5b7f.json -d
