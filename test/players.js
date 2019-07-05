@@ -10,7 +10,9 @@ describe('players api', function(){
   });
 
   it('should get player', function(){
-
+    const player = playersApi.getPlayer(52);
+    expect(player).to.be.an(object);
+    expect(player.shortname).to.equal('N.DJO');
   });
 
   it('should delete player', function(){
