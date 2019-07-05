@@ -18,7 +18,8 @@ describe('players api', function(){
   it('should delete player', function(){
     const initPlayers = playersApi.listPlayers();
     newPlayers = playersApi.deletePlayer(52);
-    expect(initPlayers.length).to.be.gt(newPlayers.length);
+    playersId = newPlayers.map(p => p.id);
+    expect(playersId).to.not.contain(52);
   });
 
 })
