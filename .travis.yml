@@ -1,8 +1,34 @@
-deploy:
-  provider: gae
-  keyfile: euplayers-8e3bd09e5b7f.json
-  project: euplayers
-  on: master
+# Use Dockerized infrastructure
+sudo: false
+language: python
+# Cache our Gcloud SDK between commands
+cache:
+  directories:
+  - "$HOME/google-cloud-sdk/"
+env:
+# Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
+- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
+# Install Google App Engine Python SDK
+- if [ ! -d "${GAE_PYTHONPATH}" ]; then
+    python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
+  fi
+# [START auth]
+# Decrypt the credentials we added to the repo using the key we added with the Travis command line tool
 - openssl aes-256-cbc -K $encrypted_572863528640_key -iv $encrypted_572863528640_iv
   -in euplayers-8e3bd09e5b7f.json.enc -out euplayers-8e3bd09e5b7f.json -d
+# If the SDK is not already cached, download it and unpack it
+- if [ ! -d ${HOME}/google-cloud-sdk ]; then
+     curl https://sdk.cloud.google.com | bash;
+  fi
+- tar -xzf credentials.tar.gz
+- mkdir -p lib
+# Here we use the decrypted service account credentials to authenticate the command line tool
+- gcloud auth activate-service-account --key-file euplayers-8e3bd09e5b7f.json
+# [END auth]
+
+install:
+- gcloud config set project euplayers
+
+script:
+- gcloud app deploy app.yaml
