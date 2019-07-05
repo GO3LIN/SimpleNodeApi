@@ -6,7 +6,7 @@ This is a simple node api written with pure NodeJS only, so zero dependencies re
 Just run: `npm start`
 
 
-## Development
+## Development
 
 
 In the development mode, you can use nodemon to track changes, so running the app with this commands:
@@ -20,7 +20,7 @@ Then run the app:
 `nodemon start`
 
 
-## Unit tests
+## Unit tests
 
 
 Unit tests are placed in the test folder, for running them:
@@ -28,7 +28,7 @@ Unit tests are placed in the test folder, for running them:
 `npm test`
 
 
-## Deployment
+## Deployment
 
 
 All you have to do, is to push to master branch. Travis is configured to deploy to Google Cloud app engine
