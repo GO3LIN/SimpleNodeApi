@@ -8,7 +8,8 @@ const playersApi = {
     return players.find(p => p.id === id);
   },
   deletePlayer: (id) => {
-    return players.filter(p => p.id !== id);
+    const newPlayers = players.filter(p => p.id !== id);
+    return newPlayers.length === players.length ? undefined : newPlayers;
   }
 }
 

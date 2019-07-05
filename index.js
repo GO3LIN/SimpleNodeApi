@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-const PORT = 2222;
+const PORT = 8080;
 
 const playersApi = require('./players');
 
@@ -19,20 +19,21 @@ const handleRequest = (req, res) => {
   }
   // GET player endpoint
   else if(playerRegex.test(route) && req.method === 'GET') {
-    // Get player id from url
     const playerId = getPlayerId(route);
     const player = playersApi.getPlayer(playerId);
+    handlePlayerNotFound(player, res);
     res.end(JSON.stringify(player));
   }
   // DELETE player endpoint
   else if(playerRegex.test(route) && req.method === 'DELETE') {
-    console.log('delete');
     const playerId = getPlayerId(route);
     const players = playersApi.deletePlayer(playerId);
+    handlePlayerNotFound(player, res);
     res.end(JSON.stringify(players));
   }
 
   res.end(JSON.stringify('Hello world !'));
+  
 }
 
 const server = http.createServer(handleRequest);
@@ -45,3 +46,9 @@ getPlayerId = route => {
   return parseInt(route.match(playerRegex)[1], 10)
 };
 
+handlePlayerNotFound = (player, res) => {
+  if(!player) {
+    res.statusCode = 404;
+    res.end(JSON.stringify('Not found'));
+  }
+}
