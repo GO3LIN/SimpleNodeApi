@@ -2,7 +2,10 @@ let players = require('./players.json').players;
 
 const playersApi = {
   listPlayers: () => {
-
+    return players.sort(p => p.id);
+  },
+  getPlayer: (id) => {
+    return players.find(p => p.id === id);
   }
 }
 

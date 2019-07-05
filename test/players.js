@@ -9,9 +9,9 @@ describe('players api', function(){
     expect(players[1].id).to.be.gt(players[0].id);
   });
 
-  it('should get player', function(){
+  it('should get a player', function(){
     const player = playersApi.getPlayer(52);
-    expect(player).to.be.an(object);
+    expect(player).to.be.an('object');
     expect(player.shortname).to.equal('N.DJO');
   });
 
